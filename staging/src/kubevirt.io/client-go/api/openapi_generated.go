@@ -373,6 +373,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubevirt.io/api/core/v1.Firmware":                                                           schema_kubevirtio_api_core_v1_Firmware(ref),
 		"kubevirt.io/api/core/v1.Flags":                                                              schema_kubevirtio_api_core_v1_Flags(ref),
 		"kubevirt.io/api/core/v1.FreezeUnfreezeTimeout":                                              schema_kubevirtio_api_core_v1_FreezeUnfreezeTimeout(ref),
+		"kubevirt.io/api/core/v1.FwCfgDetails":                                                       schema_kubevirtio_api_core_v1_FwCfgDetails(ref),
 		"kubevirt.io/api/core/v1.GPU":                                                                schema_kubevirtio_api_core_v1_GPU(ref),
 		"kubevirt.io/api/core/v1.GenerationStatus":                                                   schema_kubevirtio_api_core_v1_GenerationStatus(ref),
 		"kubevirt.io/api/core/v1.GuestAgentCommandInfo":                                              schema_kubevirtio_api_core_v1_GuestAgentCommandInfo(ref),
@@ -482,6 +483,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubevirt.io/api/core/v1.StopOptions":                                                        schema_kubevirtio_api_core_v1_StopOptions(ref),
 		"kubevirt.io/api/core/v1.SupportContainerResources":                                          schema_kubevirtio_api_core_v1_SupportContainerResources(ref),
 		"kubevirt.io/api/core/v1.SyNICTimer":                                                         schema_kubevirtio_api_core_v1_SyNICTimer(ref),
+		"kubevirt.io/api/core/v1.SysInfoFwCfg":                                                       schema_kubevirtio_api_core_v1_SysInfoFwCfg(ref),
 		"kubevirt.io/api/core/v1.SysprepSource":                                                      schema_kubevirtio_api_core_v1_SysprepSource(ref),
 		"kubevirt.io/api/core/v1.TLSConfiguration":                                                   schema_kubevirtio_api_core_v1_TLSConfiguration(ref),
 		"kubevirt.io/api/core/v1.TPMDevice":                                                          schema_kubevirtio_api_core_v1_TPMDevice(ref),
@@ -17928,11 +17930,17 @@ func schema_kubevirtio_api_core_v1_Firmware(ref common.ReferenceCallback) common
 							Ref:         ref("kubevirt.io/api/core/v1.ACPI"),
 						},
 					},
+					"sysInfoFwCfg": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Pass custom sysinfo fwcfg parameters",
+							Ref:         ref("kubevirt.io/api/core/v1.SysInfoFwCfg"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.ACPI", "kubevirt.io/api/core/v1.Bootloader", "kubevirt.io/api/core/v1.KernelBoot"},
+			"kubevirt.io/api/core/v1.ACPI", "kubevirt.io/api/core/v1.Bootloader", "kubevirt.io/api/core/v1.KernelBoot", "kubevirt.io/api/core/v1.SysInfoFwCfg"},
 	}
 }
 
@@ -18012,6 +18020,33 @@ func schema_kubevirtio_api_core_v1_FreezeUnfreezeTimeout(ref common.ReferenceCal
 		},
 		Dependencies: []string{
 			"k8s.io/apimachinery/pkg/apis/meta/v1.Duration"},
+	}
+}
+
+func schema_kubevirtio_api_core_v1_FwCfgDetails(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"name": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"value": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+				},
+				Required: []string{"name", "value"},
+			},
+		},
 	}
 }
 
@@ -22155,6 +22190,33 @@ func schema_kubevirtio_api_core_v1_SyNICTimer(ref common.ReferenceCallback) comm
 		},
 		Dependencies: []string{
 			"kubevirt.io/api/core/v1.FeatureState"},
+	}
+}
+
+func schema_kubevirtio_api_core_v1_SysInfoFwCfg(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"details": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("kubevirt.io/api/core/v1.FwCfgDetails"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"kubevirt.io/api/core/v1.FwCfgDetails"},
 	}
 }
 

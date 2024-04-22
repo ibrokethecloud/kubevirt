@@ -17166,6 +17166,10 @@
       "description": "The system-serial-number in SMBIOS",
       "type": "string"
      },
+     "sysInfoFwCfg": {
+      "description": "Pass custom sysinfo fwcfg parameters",
+      "$ref": "#/definitions/v1.SysInfoFwCfg"
+     },
      "uuid": {
       "description": "UUID reported by the vmi bios. Defaults to a random generated uid.",
       "type": "string"
@@ -17208,6 +17212,23 @@
     "properties": {
      "unfreezeTimeout": {
       "$ref": "#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Duration"
+     }
+    }
+   },
+   "v1.FwCfgDetails": {
+    "type": "object",
+    "required": [
+     "name",
+     "value"
+    ],
+    "properties": {
+     "name": {
+      "type": "string",
+      "default": ""
+     },
+     "value": {
+      "type": "string",
+      "default": ""
      }
     }
    },
@@ -19342,6 +19363,18 @@
      },
      "enabled": {
       "type": "boolean"
+     }
+    }
+   },
+   "v1.SysInfoFwCfg": {
+    "type": "object",
+    "properties": {
+     "details": {
+      "type": "array",
+      "items": {
+       "default": {},
+       "$ref": "#/definitions/v1.FwCfgDetails"
+      }
      }
     }
    },

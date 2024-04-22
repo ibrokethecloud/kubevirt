@@ -229,11 +229,12 @@ func (Machine) SwaggerDoc() map[string]string {
 
 func (Firmware) SwaggerDoc() map[string]string {
 	return map[string]string{
-		"uuid":       "UUID reported by the vmi bios.\nDefaults to a random generated uid.",
-		"bootloader": "Settings to control the bootloader that is used.\n+optional",
-		"serial":     "The system-serial-number in SMBIOS",
-		"kernelBoot": "Settings to set the kernel for booting.\n+optional",
-		"acpi":       "Information that can be set in the ACPI table",
+		"uuid":         "UUID reported by the vmi bios.\nDefaults to a random generated uid.",
+		"bootloader":   "Settings to control the bootloader that is used.\n+optional",
+		"serial":       "The system-serial-number in SMBIOS",
+		"kernelBoot":   "Settings to set the kernel for booting.\n+optional",
+		"acpi":         "Information that can be set in the ACPI table",
+		"sysInfoFwCfg": "Pass custom sysinfo fwcfg parameters",
 	}
 }
 
@@ -886,4 +887,12 @@ func (CPUTopology) SwaggerDoc() map[string]string {
 		"sockets": "Sockets specifies the number of sockets inside the vmi.\nMust be a value greater or equal 1.",
 		"threads": "Threads specifies the number of threads inside the vmi.\nMust be a value greater or equal 1.",
 	}
+}
+
+func (SysInfoFwCfg) SwaggerDoc() map[string]string {
+	return map[string]string{}
+}
+
+func (FwCfgDetails) SwaggerDoc() map[string]string {
+	return map[string]string{}
 }
