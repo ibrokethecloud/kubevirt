@@ -429,6 +429,8 @@ type Firmware struct {
 	KernelBoot *KernelBoot `json:"kernelBoot,omitempty"`
 	// Information that can be set in the ACPI table
 	ACPI *ACPI `json:"acpi,omitempty"`
+	// Pass custom sysinfo fwcfg parameters
+	SysInfoFwCfg *SysInfoFwCfg `json:"sysInfoFwCfg,omitempty"`
 }
 
 type ACPI struct {
@@ -1574,4 +1576,13 @@ type CPUTopology struct {
 	// Threads specifies the number of threads inside the vmi.
 	// Must be a value greater or equal 1.
 	Threads uint32 `json:"threads,omitempty"`
+}
+
+type SysInfoFwCfg struct {
+	Details []FwCfgDetails `json:"details,omitempty"`
+}
+
+type FwCfgDetails struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }

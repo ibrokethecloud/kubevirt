@@ -1128,6 +1128,7 @@ func Convert_v1_Features_To_api_Features(source *v1.Features, features *api.Feat
 			State: boolToOnOff(source.Pvspinlock.Enabled, true),
 		}
 	}
+
 	return nil
 }
 
@@ -1307,7 +1308,7 @@ func Convert_v1_Firmware_To_related_apis(vmi *v1.VirtualMachineInstance, domain 
 		return nil
 	}
 
-	domain.Spec.SysInfo.System = []api.Entry{
+	domain.Spec.SysInfo[0].System = []api.Entry{
 		{
 			Name:  "uuid",
 			Value: string(firmware.UUID),
@@ -1337,7 +1338,7 @@ func Convert_v1_Firmware_To_related_apis(vmi *v1.VirtualMachineInstance, domain 
 	}
 
 	if len(firmware.Serial) > 0 {
-		domain.Spec.SysInfo.System = append(domain.Spec.SysInfo.System, api.Entry{
+		domain.Spec.SysInfo[0].System = append(domain.Spec.SysInfo[0].System, api.Entry{
 			Name:  "serial",
 			Value: string(firmware.Serial),
 		})
@@ -1377,6 +1378,19 @@ func Convert_v1_Firmware_To_related_apis(vmi *v1.VirtualMachineInstance, domain 
 				},
 			}
 		}
+	}
+
+	// Add additional FwCfg sysinfo to domain
+	if firmware.SysInfoFwCfg != nil {
+		fwCfgSysInfo := &api.SysInfo{}
+		fwCfgSysInfo.Type = "fwcfg"
+		for _, v := range firmware.SysInfoFwCfg.Details {
+			fwCfgSysInfo.FwCfg = append(fwCfgSysInfo.FwCfg, api.Entry{
+				Name:  v.Name,
+				Value: v.Value,
+			})
+		}
+		domain.Spec.SysInfo = append(domain.Spec.SysInfo, fwCfgSysInfo)
 	}
 
 	return nil
@@ -1451,7 +1465,7 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 		domain.Spec.Devices.Channels = append(domain.Spec.Devices.Channels, convertDownwardMetricsChannel())
 	}
 
-	domain.Spec.SysInfo = &api.SysInfo{}
+	domain.Spec.SysInfo[0] = &api.SysInfo{}
 
 	err = Convert_v1_Firmware_To_related_apis(vmi, domain, c)
 	if err != nil {
@@ -1472,8 +1486,9 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 			IOMMU: "on",
 		}
 	}
+
 	if c.SMBios != nil {
-		domain.Spec.SysInfo.System = append(domain.Spec.SysInfo.System,
+		domain.Spec.SysInfo[0].System = append(domain.Spec.SysInfo[0].System,
 			api.Entry{
 				Name:  "manufacturer",
 				Value: c.SMBios.Manufacturer,
@@ -1508,7 +1523,7 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 	}
 
 	if vmi.Spec.Domain.Chassis != nil {
-		domain.Spec.SysInfo.Chassis = []api.Entry{
+		domain.Spec.SysInfo[0].Chassis = []api.Entry{
 			{
 				Name:  "manufacturer",
 				Value: string(vmi.Spec.Domain.Chassis.Manufacturer),

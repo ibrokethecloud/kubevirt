@@ -162,12 +162,12 @@ var _ = ginkgo.Describe("Schema", func() {
 			PVSpinlock: &FeaturePVSpinlock{State: "off"},
 			PMU:        &FeatureState{State: "off"},
 		}
-		exampleDomain.Spec.SysInfo = &SysInfo{
+		exampleDomain.Spec.SysInfo = append(exampleDomain.Spec.SysInfo, &SysInfo{
 			Type: "smbios",
 			System: []Entry{
 				{Name: "uuid", Value: "e4686d2c-6e8d-4335-b8fd-81bee22f4814"},
 			},
-		}
+		})
 		exampleDomain.Spec.CPU.Topology = &CPUTopology{
 			Sockets: 1,
 			Cores:   2,

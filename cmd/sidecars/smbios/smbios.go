@@ -55,11 +55,11 @@ func onDefineDomain(vmiJSON, domainXML []byte) (string, error) {
 
 	domainSpec.OS.SMBios = &api.SMBios{Mode: "sysinfo"}
 	if domainSpec.SysInfo == nil {
-		domainSpec.SysInfo = &api.SysInfo{}
+		domainSpec.SysInfo = append(domainSpec.SysInfo, &api.SysInfo{})
 	}
-	domainSpec.SysInfo.Type = "smbios"
+	domainSpec.SysInfo[0].Type = "smbios"
 	if baseBoardManufacturer, found := annotations[baseBoardManufacturerAnnotation]; found {
-		domainSpec.SysInfo.BaseBoard = append(domainSpec.SysInfo.BaseBoard, api.Entry{
+		domainSpec.SysInfo[0].BaseBoard = append(domainSpec.SysInfo[0].BaseBoard, api.Entry{
 			Name:  "manufacturer",
 			Value: baseBoardManufacturer,
 		})

@@ -205,7 +205,7 @@ type DomainSpec struct {
 	MaxMemory      *MaxMemory      `xml:"maxMemory,omitempty"`
 	MemoryBacking  *MemoryBacking  `xml:"memoryBacking,omitempty"`
 	OS             OS              `xml:"os"`
-	SysInfo        *SysInfo        `xml:"sysinfo,omitempty"`
+	SysInfo        []*SysInfo      `xml:"sysinfo,omitempty"`
 	Devices        Devices         `xml:"devices"`
 	Clock          *Clock          `xml:"clock,omitempty"`
 	Resource       *Resource       `xml:"resource,omitempty"`
@@ -1012,6 +1012,7 @@ type SysInfo struct {
 	BIOS      []Entry `xml:"bios>entry"`
 	BaseBoard []Entry `xml:"baseBoard>entry"`
 	Chassis   []Entry `xml:"chassis>entry"`
+	FwCfg     []Entry `xml:">entry"`
 }
 
 type Entry struct {

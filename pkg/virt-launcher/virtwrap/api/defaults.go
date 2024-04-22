@@ -70,7 +70,7 @@ func (d *Defaulter) SetObjectDefaults_Domain(in *Domain) {
 	d.SetDefaults_DomainSpec(&in.Spec)
 	d.SetDefaults_OSType(&in.Spec.OS.Type)
 	if in.Spec.SysInfo != nil {
-		d.SetDefaults_SysInfo(in.Spec.SysInfo)
+		d.SetDefaults_SysInfo(in.Spec.SysInfo[0])
 	}
 	d.SetDefaults_Devices(&in.Spec.Devices)
 }
