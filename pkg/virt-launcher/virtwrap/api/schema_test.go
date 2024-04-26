@@ -25,6 +25,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"strings"
+	"testing"
 	"text/template"
 
 	ginkgo "github.com/onsi/ginkgo/v2"
@@ -164,7 +165,7 @@ var _ = ginkgo.Describe("Schema", func() {
 		}
 		exampleDomain.Spec.SysInfo = append(exampleDomain.Spec.SysInfo, &SysInfo{
 			Type: "smbios",
-			System: []Entry{
+			System: &[]Entry{
 				{Name: "uuid", Value: "e4686d2c-6e8d-4335-b8fd-81bee22f4814"},
 			},
 		})
@@ -406,3 +407,145 @@ var _ = ginkgo.Describe("JSON marshal of the alias of a domain device", func() {
 		Expect(newAlias.IsUserDefined()).To(BeTrue())
 	})
 })
+
+func Test_QuickDomainTest(t *testing.T) {
+	exampleDomain := NewMinimalDomainWithNS("mynamespace", "testvmi")
+	exampleDomain.Spec.Devices.Disks = []Disk{
+		{Type: "network",
+			Device: "disk",
+			Driver: &DiskDriver{Name: "qemu",
+				Type: "raw"},
+			Source: DiskSource{Protocol: "iscsi",
+				Name: "iqn.2013-07.com.example:iscsi-nopool/2",
+				Host: &DiskSourceHost{Name: "example.com", Port: "3260"}},
+			Target: DiskTarget{Device: "vda"},
+			Alias:  NewUserDefinedAlias("mydisk"),
+		},
+		{Type: "file",
+			Device: "disk",
+			Driver: &DiskDriver{Name: "qemu",
+				Type: "raw"},
+			Source: DiskSource{
+				File: "/var/run/libvirt/cloud-init-dir/mynamespace/testvmi/noCloud.iso",
+			},
+			Target: DiskTarget{Device: "vdb"},
+			Alias:  NewUserDefinedAlias("mydisk1"),
+		},
+		{Type: "block",
+			Device: "disk",
+			Driver: &DiskDriver{Name: "qemu",
+				Type: "raw"},
+			Source: DiskSource{
+				Dev: "/dev/testdev",
+			},
+			Target: DiskTarget{Device: "vdc"},
+			Alias:  NewUserDefinedAlias("mydisk2"),
+		},
+	}
+
+	exampleDomain.Spec.Devices.Inputs = []Input{
+		{
+			Type:  "tablet",
+			Bus:   v1.VirtIO,
+			Alias: NewUserDefinedAlias("tablet0"),
+		},
+	}
+
+	var heads uint = 1
+	var vram uint = 16384
+	exampleDomain.Spec.Devices.Video = []Video{
+		{Model: VideoModel{Type: "vga", Heads: &heads, VRam: &vram}},
+	}
+	exampleDomain.Spec.Devices.Consoles = []Console{
+		{Type: "pty"},
+	}
+	exampleDomain.Spec.Devices.Watchdogs = []Watchdog{
+		{
+			Model:  "i6300esb",
+			Action: "poweroff",
+			Alias:  NewUserDefinedAlias("mywatchdog"),
+		},
+	}
+	exampleDomain.Spec.Devices.Rng = &Rng{
+		Model:   v1.VirtIO,
+		Backend: &RngBackend{Source: "/dev/urandom", Model: "random"},
+	}
+	exampleDomain.Spec.Devices.Controllers = []Controller{
+		{
+			Type:  "raw",
+			Model: "none",
+			Index: "0",
+		},
+	}
+	exampleDomain.Spec.Features = &Features{
+		ACPI: &FeatureEnabled{},
+		SMM:  &FeatureEnabled{},
+		KVM: &FeatureKVM{
+			Hidden:        &FeatureState{State: "on"},
+			HintDedicated: &FeatureState{State: "on"},
+		},
+		PVSpinlock: &FeaturePVSpinlock{State: "off"},
+		PMU:        &FeatureState{State: "off"},
+	}
+	exampleDomain.Spec.SysInfo = append(exampleDomain.Spec.SysInfo, &SysInfo{
+		Type: "smbios",
+		System: &[]Entry{
+			{Name: "uuid", Value: "e4686d2c-6e8d-4335-b8fd-81bee22f4814"},
+		},
+	})
+	exampleDomain.Spec.CPU.Topology = &CPUTopology{
+		Sockets: 1,
+		Cores:   2,
+		Threads: 1,
+	}
+	exampleDomain.Spec.VCPU = &VCPU{
+		Placement: "static",
+		CPUs:      2,
+	}
+	exampleDomain.Spec.CPU.Mode = "custom"
+	exampleDomain.Spec.CPU.Model = "Conroe"
+	exampleDomain.Spec.CPU.Features = []CPUFeature{
+		{
+			Name:   "pcid",
+			Policy: "require",
+		},
+		{
+			Name:   "monitor",
+			Policy: "disable",
+		},
+	}
+	exampleDomain.Spec.Metadata.KubeVirt.UID = "f4686d2c-6e8d-4335-b8fd-81bee22f4814"
+	exampleDomain.Spec.Metadata.KubeVirt.GracePeriod = &GracePeriodMetadata{}
+	exampleDomain.Spec.Metadata.KubeVirt.GracePeriod.DeletionGracePeriodSeconds = 5
+	exampleDomain.Spec.IOThreads = &IOThreads{IOThreads: 2}
+	exampleDomain.Spec.Devices.Ballooning = &MemBalloon{Model: v1.VirtIO, Stats: &Stats{Period: 10}}
+	// add fwcfg info
+	fwcfgSysInfo := &SysInfo{
+		Type: "fwcfg",
+		Entry: &[]Entry{
+			{
+				Name:  "key",
+				Value: "value",
+			},
+		},
+	}
+
+	exampleDomain.Spec.SysInfo = append(exampleDomain.Spec.SysInfo, fwcfgSysInfo)
+	buf, err := xml.MarshalIndent(exampleDomain.Spec, "", "  ")
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(string(buf))
+}
+
+func Test_EncodeLoader(t *testing.T) {
+	l := &Loader{
+		ReadOnly: "yes",
+		Secure:   "yes",
+	}
+	buf, err := xml.MarshalIndent(l, "", "	")
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(string(buf))
+}

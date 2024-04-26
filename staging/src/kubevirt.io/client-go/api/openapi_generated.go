@@ -17444,12 +17444,18 @@ func schema_kubevirtio_api_core_v1_DomainSpec(ref common.ReferenceCallback) comm
 							Ref:         ref("kubevirt.io/api/core/v1.LaunchSecurity"),
 						},
 					},
+					"sysInfoFwCfg": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Pass custom sysinfo fwcfg parameters",
+							Ref:         ref("kubevirt.io/api/core/v1.SysInfoFwCfg"),
+						},
+					},
 				},
 				Required: []string{"devices"},
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.CPU", "kubevirt.io/api/core/v1.Chassis", "kubevirt.io/api/core/v1.Clock", "kubevirt.io/api/core/v1.Devices", "kubevirt.io/api/core/v1.Features", "kubevirt.io/api/core/v1.Firmware", "kubevirt.io/api/core/v1.LaunchSecurity", "kubevirt.io/api/core/v1.Machine", "kubevirt.io/api/core/v1.Memory", "kubevirt.io/api/core/v1.ResourceRequirements"},
+			"kubevirt.io/api/core/v1.CPU", "kubevirt.io/api/core/v1.Chassis", "kubevirt.io/api/core/v1.Clock", "kubevirt.io/api/core/v1.Devices", "kubevirt.io/api/core/v1.Features", "kubevirt.io/api/core/v1.Firmware", "kubevirt.io/api/core/v1.LaunchSecurity", "kubevirt.io/api/core/v1.Machine", "kubevirt.io/api/core/v1.Memory", "kubevirt.io/api/core/v1.ResourceRequirements", "kubevirt.io/api/core/v1.SysInfoFwCfg"},
 	}
 }
 
@@ -17930,17 +17936,11 @@ func schema_kubevirtio_api_core_v1_Firmware(ref common.ReferenceCallback) common
 							Ref:         ref("kubevirt.io/api/core/v1.ACPI"),
 						},
 					},
-					"sysInfoFwCfg": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Pass custom sysinfo fwcfg parameters",
-							Ref:         ref("kubevirt.io/api/core/v1.SysInfoFwCfg"),
-						},
-					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.ACPI", "kubevirt.io/api/core/v1.Bootloader", "kubevirt.io/api/core/v1.KernelBoot", "kubevirt.io/api/core/v1.SysInfoFwCfg"},
+			"kubevirt.io/api/core/v1.ACPI", "kubevirt.io/api/core/v1.Bootloader", "kubevirt.io/api/core/v1.KernelBoot"},
 	}
 }
 

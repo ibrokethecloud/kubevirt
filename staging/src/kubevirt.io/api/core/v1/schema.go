@@ -209,6 +209,8 @@ type DomainSpec struct {
 	// Launch Security setting of the vmi.
 	// +optional
 	LaunchSecurity *LaunchSecurity `json:"launchSecurity,omitempty"`
+	// Pass custom sysinfo fwcfg parameters
+	SysInfoFwCfg *SysInfoFwCfg `json:"sysInfoFwCfg,omitempty"`
 }
 
 // Chassis specifies the chassis info passed to the domain.
@@ -429,8 +431,6 @@ type Firmware struct {
 	KernelBoot *KernelBoot `json:"kernelBoot,omitempty"`
 	// Information that can be set in the ACPI table
 	ACPI *ACPI `json:"acpi,omitempty"`
-	// Pass custom sysinfo fwcfg parameters
-	SysInfoFwCfg *SysInfoFwCfg `json:"sysInfoFwCfg,omitempty"`
 }
 
 type ACPI struct {

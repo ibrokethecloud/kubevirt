@@ -1007,14 +1007,17 @@ type BIOS struct {
 }
 
 type SysInfo struct {
-	Type      string  `xml:"type,attr"`
-	System    []Entry `xml:"system>entry"`
-	BIOS      []Entry `xml:"bios>entry"`
-	BaseBoard []Entry `xml:"baseBoard>entry"`
-	Chassis   []Entry `xml:"chassis>entry"`
-	FwCfg     []Entry `xml:">entry"`
+	Type      string   `xml:"type,attr"`
+	System    *[]Entry `xml:"system>entry"`
+	BIOS      *[]Entry `xml:"bios>entry"`
+	BaseBoard *[]Entry `xml:"baseBoard>entry"`
+	Chassis   *[]Entry `xml:"chassis>entry"`
+	Entry     *[]Entry `xml:"entry"`
 }
 
+type EntryDetails struct {
+	Entry []Entry `xml:"entry,omitempty"`
+}
 type Entry struct {
 	Name  string `xml:"name,attr"`
 	Value string `xml:",chardata"`

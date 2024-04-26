@@ -95,6 +95,7 @@ func (DomainSpec) SwaggerDoc() map[string]string {
 		"ioThreadsPolicy": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto\n+optional",
 		"chassis":         "Chassis specifies the chassis info passed to the domain.\n+optional",
 		"launchSecurity":  "Launch Security setting of the vmi.\n+optional",
+		"sysInfoFwCfg":    "Pass custom sysinfo fwcfg parameters",
 	}
 }
 
@@ -229,12 +230,11 @@ func (Machine) SwaggerDoc() map[string]string {
 
 func (Firmware) SwaggerDoc() map[string]string {
 	return map[string]string{
-		"uuid":         "UUID reported by the vmi bios.\nDefaults to a random generated uid.",
-		"bootloader":   "Settings to control the bootloader that is used.\n+optional",
-		"serial":       "The system-serial-number in SMBIOS",
-		"kernelBoot":   "Settings to set the kernel for booting.\n+optional",
-		"acpi":         "Information that can be set in the ACPI table",
-		"sysInfoFwCfg": "Pass custom sysinfo fwcfg parameters",
+		"uuid":       "UUID reported by the vmi bios.\nDefaults to a random generated uid.",
+		"bootloader": "Settings to control the bootloader that is used.\n+optional",
+		"serial":     "The system-serial-number in SMBIOS",
+		"kernelBoot": "Settings to set the kernel for booting.\n+optional",
+		"acpi":       "Information that can be set in the ACPI table",
 	}
 }
 

@@ -1227,6 +1227,11 @@ func (in *DomainSpec) DeepCopyInto(out *DomainSpec) {
 		*out = new(LaunchSecurity)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.SysInfoFwCfg != nil {
+		in, out := &in.SysInfoFwCfg, &out.SysInfoFwCfg
+		*out = new(SysInfoFwCfg)
+		(*in).DeepCopyInto(*out)
+	}
 	return
 }
 
@@ -1651,11 +1656,6 @@ func (in *Firmware) DeepCopyInto(out *Firmware) {
 		in, out := &in.ACPI, &out.ACPI
 		*out = new(ACPI)
 		**out = **in
-	}
-	if in.SysInfoFwCfg != nil {
-		in, out := &in.SysInfoFwCfg, &out.SysInfoFwCfg
-		*out = new(SysInfoFwCfg)
-		(*in).DeepCopyInto(*out)
 	}
 	return
 }

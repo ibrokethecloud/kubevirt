@@ -16906,6 +16906,10 @@
       "description": "Resources describes the Compute Resources required by this vmi.",
       "default": {},
       "$ref": "#/definitions/v1.ResourceRequirements"
+     },
+     "sysInfoFwCfg": {
+      "description": "Pass custom sysinfo fwcfg parameters",
+      "$ref": "#/definitions/v1.SysInfoFwCfg"
      }
     }
    },
@@ -17165,10 +17169,6 @@
      "serial": {
       "description": "The system-serial-number in SMBIOS",
       "type": "string"
-     },
-     "sysInfoFwCfg": {
-      "description": "Pass custom sysinfo fwcfg parameters",
-      "$ref": "#/definitions/v1.SysInfoFwCfg"
      },
      "uuid": {
       "description": "UUID reported by the vmi bios. Defaults to a random generated uid.",

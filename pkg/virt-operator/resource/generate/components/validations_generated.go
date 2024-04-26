@@ -6408,22 +6408,6 @@ var CRDsValidation map[string]string = map[string]string{
                         serial:
                           description: The system-serial-number in SMBIOS
                           type: string
-                        sysInfoFwCfg:
-                          description: Pass custom sysinfo fwcfg parameters
-                          properties:
-                            details:
-                              items:
-                                properties:
-                                  name:
-                                    type: string
-                                  value:
-                                    type: string
-                                required:
-                                - name
-                                - value
-                                type: object
-                              type: array
-                          type: object
                         uuid:
                           description: UUID reported by the vmi bios. Defaults to
                             a random generated uid.
@@ -6537,6 +6521,22 @@ var CRDsValidation map[string]string = map[string]string{
                           description: Requests is a description of the initial vmi
                             resources. Valid resource keys are "memory" and "cpu".
                           type: object
+                      type: object
+                    sysInfoFwCfg:
+                      description: Pass custom sysinfo fwcfg parameters
+                      properties:
+                        details:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            required:
+                            - name
+                            - value
+                            type: object
+                          type: array
                       type: object
                   required:
                   - devices
@@ -10983,22 +10983,6 @@ var CRDsValidation map[string]string = map[string]string{
                 serial:
                   description: The system-serial-number in SMBIOS
                   type: string
-                sysInfoFwCfg:
-                  description: Pass custom sysinfo fwcfg parameters
-                  properties:
-                    details:
-                      items:
-                        properties:
-                          name:
-                            type: string
-                          value:
-                            type: string
-                        required:
-                        - name
-                        - value
-                        type: object
-                      type: array
-                  type: object
                 uuid:
                   description: UUID reported by the vmi bios. Defaults to a random
                     generated uid.
@@ -11105,6 +11089,22 @@ var CRDsValidation map[string]string = map[string]string{
                   description: Requests is a description of the initial vmi resources.
                     Valid resource keys are "memory" and "cpu".
                   type: object
+              type: object
+            sysInfoFwCfg:
+              description: Pass custom sysinfo fwcfg parameters
+              properties:
+                details:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                      value:
+                        type: string
+                    required:
+                    - name
+                    - value
+                    type: object
+                  type: array
               type: object
           required:
           - devices
@@ -13800,22 +13800,6 @@ var CRDsValidation map[string]string = map[string]string{
                 serial:
                   description: The system-serial-number in SMBIOS
                   type: string
-                sysInfoFwCfg:
-                  description: Pass custom sysinfo fwcfg parameters
-                  properties:
-                    details:
-                      items:
-                        properties:
-                          name:
-                            type: string
-                          value:
-                            type: string
-                        required:
-                        - name
-                        - value
-                        type: object
-                      type: array
-                  type: object
                 uuid:
                   description: UUID reported by the vmi bios. Defaults to a random
                     generated uid.
@@ -13922,6 +13906,22 @@ var CRDsValidation map[string]string = map[string]string{
                   description: Requests is a description of the initial vmi resources.
                     Valid resource keys are "memory" and "cpu".
                   type: object
+              type: object
+            sysInfoFwCfg:
+              description: Pass custom sysinfo fwcfg parameters
+              properties:
+                details:
+                  items:
+                    properties:
+                      name:
+                        type: string
+                      value:
+                        type: string
+                    required:
+                    - name
+                    - value
+                    type: object
+                  type: array
               type: object
           required:
           - devices
@@ -16057,22 +16057,6 @@ var CRDsValidation map[string]string = map[string]string{
                         serial:
                           description: The system-serial-number in SMBIOS
                           type: string
-                        sysInfoFwCfg:
-                          description: Pass custom sysinfo fwcfg parameters
-                          properties:
-                            details:
-                              items:
-                                properties:
-                                  name:
-                                    type: string
-                                  value:
-                                    type: string
-                                required:
-                                - name
-                                - value
-                                type: object
-                              type: array
-                          type: object
                         uuid:
                           description: UUID reported by the vmi bios. Defaults to
                             a random generated uid.
@@ -16186,6 +16170,22 @@ var CRDsValidation map[string]string = map[string]string{
                           description: Requests is a description of the initial vmi
                             resources. Valid resource keys are "memory" and "cpu".
                           type: object
+                      type: object
+                    sysInfoFwCfg:
+                      description: Pass custom sysinfo fwcfg parameters
+                      properties:
+                        details:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            required:
+                            - name
+                            - value
+                            type: object
+                          type: array
                       type: object
                   required:
                   - devices
@@ -20486,22 +20486,6 @@ var CRDsValidation map[string]string = map[string]string{
                                 serial:
                                   description: The system-serial-number in SMBIOS
                                   type: string
-                                sysInfoFwCfg:
-                                  description: Pass custom sysinfo fwcfg parameters
-                                  properties:
-                                    details:
-                                      items:
-                                        properties:
-                                          name:
-                                            type: string
-                                          value:
-                                            type: string
-                                        required:
-                                        - name
-                                        - value
-                                        type: object
-                                      type: array
-                                  type: object
                                 uuid:
                                   description: UUID reported by the vmi bios. Defaults
                                     to a random generated uid.
@@ -20622,6 +20606,22 @@ var CRDsValidation map[string]string = map[string]string{
                                     vmi resources. Valid resource keys are "memory"
                                     and "cpu".
                                   type: object
+                              type: object
+                            sysInfoFwCfg:
+                              description: Pass custom sysinfo fwcfg parameters
+                              properties:
+                                details:
+                                  items:
+                                    properties:
+                                      name:
+                                        type: string
+                                      value:
+                                        type: string
+                                    required:
+                                    - name
+                                    - value
+                                    type: object
+                                  type: array
                               type: object
                           required:
                           - devices
@@ -25693,22 +25693,6 @@ var CRDsValidation map[string]string = map[string]string{
                                     serial:
                                       description: The system-serial-number in SMBIOS
                                       type: string
-                                    sysInfoFwCfg:
-                                      description: Pass custom sysinfo fwcfg parameters
-                                      properties:
-                                        details:
-                                          items:
-                                            properties:
-                                              name:
-                                                type: string
-                                              value:
-                                                type: string
-                                            required:
-                                            - name
-                                            - value
-                                            type: object
-                                          type: array
-                                      type: object
                                     uuid:
                                       description: UUID reported by the vmi bios.
                                         Defaults to a random generated uid.
@@ -25833,6 +25817,22 @@ var CRDsValidation map[string]string = map[string]string{
                                         initial vmi resources. Valid resource keys
                                         are "memory" and "cpu".
                                       type: object
+                                  type: object
+                                sysInfoFwCfg:
+                                  description: Pass custom sysinfo fwcfg parameters
+                                  properties:
+                                    details:
+                                      items:
+                                        properties:
+                                          name:
+                                            type: string
+                                          value:
+                                            type: string
+                                        required:
+                                        - name
+                                        - value
+                                        type: object
+                                      type: array
                                   type: object
                               required:
                               - devices

@@ -59,10 +59,15 @@ func onDefineDomain(vmiJSON, domainXML []byte) (string, error) {
 	}
 	domainSpec.SysInfo[0].Type = "smbios"
 	if baseBoardManufacturer, found := annotations[baseBoardManufacturerAnnotation]; found {
-		domainSpec.SysInfo[0].BaseBoard = append(domainSpec.SysInfo[0].BaseBoard, api.Entry{
+		var baseBoardInfo []api.Entry
+		if domainSpec.SysInfo[0].BaseBoard != nil {
+			baseBoardInfo = *domainSpec.SysInfo[0].BaseBoard
+		}
+		baseBoardInfo = append(baseBoardInfo, api.Entry{
 			Name:  "manufacturer",
 			Value: baseBoardManufacturer,
 		})
+		domainSpec.SysInfo[0].BaseBoard = &baseBoardInfo
 	}
 
 	newDomainXML, err := xml.Marshal(domainSpec)
