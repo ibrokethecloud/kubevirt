@@ -6107,6 +6107,14 @@ var CRDsValidation map[string]string = map[string]string{
                                 be enabled or disabled on the guest. Defaults to true.
                               type: boolean
                           type: object
+                        additionalQemuArgs:
+                          description: Additional Qemu Args to be passed to VM
+                          properties:
+                            args:
+                              items:
+                                type: string
+                              type: array
+                          type: object
                         apic:
                           description: Defaults to the machine type setting.
                           properties:
@@ -10696,6 +10704,14 @@ var CRDsValidation map[string]string = map[string]string{
                         or disabled on the guest. Defaults to true.
                       type: boolean
                   type: object
+                additionalQemuArgs:
+                  description: Additional Qemu Args to be passed to VM
+                  properties:
+                    args:
+                      items:
+                        type: string
+                      type: array
+                  type: object
                 apic:
                   description: Defaults to the machine type setting.
                   properties:
@@ -13497,6 +13513,14 @@ var CRDsValidation map[string]string = map[string]string{
                         or disabled on the guest. Defaults to true.
                       type: boolean
                   type: object
+                additionalQemuArgs:
+                  description: Additional Qemu Args to be passed to VM
+                  properties:
+                    args:
+                      items:
+                        type: string
+                      type: array
+                  type: object
                 apic:
                   description: Defaults to the machine type setting.
                   properties:
@@ -15707,6 +15731,14 @@ var CRDsValidation map[string]string = map[string]string{
                               description: Enabled determines if the feature should
                                 be enabled or disabled on the guest. Defaults to true.
                               type: boolean
+                          type: object
+                        additionalQemuArgs:
+                          description: Additional Qemu Args to be passed to VM
+                          properties:
+                            args:
+                              items:
+                                type: string
+                              type: array
                           type: object
                         apic:
                           description: Defaults to the machine type setting.
@@ -20106,6 +20138,15 @@ var CRDsValidation map[string]string = map[string]string{
                                         should be enabled or disabled on the guest.
                                         Defaults to true.
                                       type: boolean
+                                  type: object
+                                additionalQemuArgs:
+                                  description: Additional Qemu Args to be passed to
+                                    VM
+                                  properties:
+                                    args:
+                                      items:
+                                        type: string
+                                      type: array
                                   type: object
                                 apic:
                                   description: Defaults to the machine type setting.
@@ -25285,6 +25326,15 @@ var CRDsValidation map[string]string = map[string]string{
                                             should be enabled or disabled on the guest.
                                             Defaults to true.
                                           type: boolean
+                                      type: object
+                                    additionalQemuArgs:
+                                      description: Additional Qemu Args to be passed
+                                        to VM
+                                      properties:
+                                        args:
+                                          items:
+                                            type: string
+                                          type: array
                                       type: object
                                     apic:
                                       description: Defaults to the machine type setting.

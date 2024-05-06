@@ -451,6 +451,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubevirt.io/api/core/v1.PreferenceMatcher":                                                  schema_kubevirtio_api_core_v1_PreferenceMatcher(ref),
 		"kubevirt.io/api/core/v1.Probe":                                                              schema_kubevirtio_api_core_v1_Probe(ref),
 		"kubevirt.io/api/core/v1.ProfilerResult":                                                     schema_kubevirtio_api_core_v1_ProfilerResult(ref),
+		"kubevirt.io/api/core/v1.QemuArgs":                                                           schema_kubevirtio_api_core_v1_QemuArgs(ref),
 		"kubevirt.io/api/core/v1.QemuGuestAgentSSHPublicKeyAccessCredentialPropagation":              schema_kubevirtio_api_core_v1_QemuGuestAgentSSHPublicKeyAccessCredentialPropagation(ref),
 		"kubevirt.io/api/core/v1.QemuGuestAgentUserPasswordAccessCredentialPropagation":              schema_kubevirtio_api_core_v1_QemuGuestAgentUserPasswordAccessCredentialPropagation(ref),
 		"kubevirt.io/api/core/v1.RESTClientConfiguration":                                            schema_kubevirtio_api_core_v1_RESTClientConfiguration(ref),
@@ -17843,11 +17844,17 @@ func schema_kubevirtio_api_core_v1_Features(ref common.ReferenceCallback) common
 							Ref:         ref("kubevirt.io/api/core/v1.FeatureState"),
 						},
 					},
+					"additionalQemuArgs": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Additional Qemu Args to be passed to VM",
+							Ref:         ref("kubevirt.io/api/core/v1.QemuArgs"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.FeatureAPIC", "kubevirt.io/api/core/v1.FeatureHyperv", "kubevirt.io/api/core/v1.FeatureKVM", "kubevirt.io/api/core/v1.FeatureState", "kubevirt.io/api/core/v1.HyperVPassthrough"},
+			"kubevirt.io/api/core/v1.FeatureAPIC", "kubevirt.io/api/core/v1.FeatureHyperv", "kubevirt.io/api/core/v1.FeatureKVM", "kubevirt.io/api/core/v1.FeatureState", "kubevirt.io/api/core/v1.HyperVPassthrough", "kubevirt.io/api/core/v1.QemuArgs"},
 	}
 }
 
@@ -21187,6 +21194,32 @@ func schema_kubevirtio_api_core_v1_ProfilerResult(ref common.ReferenceCallback) 
 									SchemaProps: spec.SchemaProps{
 										Type:   []string{"string"},
 										Format: "byte",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func schema_kubevirtio_api_core_v1_QemuArgs(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"args": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
 									},
 								},
 							},

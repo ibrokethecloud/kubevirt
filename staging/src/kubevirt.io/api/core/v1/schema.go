@@ -1087,6 +1087,9 @@ type Features struct {
 	// For older kernels this feature should be explicitly disabled.
 	// +optional
 	Pvspinlock *FeatureState `json:"pvspinlock,omitempty"`
+	// Additional Qemu Args to be passed to VM
+	// +optional
+	AdditionalQemuArgs *QemuArgs `json:"additionalQemuArgs,omitempty"`
 }
 
 type SyNICTimer struct {
@@ -1574,4 +1577,8 @@ type CPUTopology struct {
 	// Threads specifies the number of threads inside the vmi.
 	// Must be a value greater or equal 1.
 	Threads uint32 `json:"threads,omitempty"`
+}
+
+type QemuArgs struct {
+	Args []string `json:"args,omitempty"`
 }

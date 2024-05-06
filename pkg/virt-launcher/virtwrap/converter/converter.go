@@ -2011,6 +2011,17 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 		domain.Spec.QEMUCmd.QEMUArg = append(domain.Spec.QEMUCmd.QEMUArg, api.Arg{Value: fmt.Sprintf("name=opt/com.coreos/config,file=%s", ignitionpath)})
 	}
 
+	// append additional qemu args
+	if vmi.Spec.Domain.Features != nil && vmi.Spec.Domain.Features.AdditionalQemuArgs != nil {
+		var additionalArgs []api.Arg
+		for _, v := range vmi.Spec.Domain.Features.AdditionalQemuArgs.Args {
+			additionalArgs = append(additionalArgs, api.Arg{Value: v})
+		}
+		if domain.Spec.QEMUCmd == nil {
+			domain.Spec.QEMUCmd = &api.Commandline{}
+		}
+		domain.Spec.QEMUCmd.QEMUArg = append(domain.Spec.QEMUCmd.QEMUArg, additionalArgs...)
+	}
 	if val := vmi.Annotations[v1.PlacePCIDevicesOnRootComplex]; val == "true" {
 		if err := PlacePCIDevicesOnRootComplex(&domain.Spec); err != nil {
 			return err
